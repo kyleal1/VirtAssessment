@@ -1,0 +1,27 @@
+#Alister Kyle's Docker Swarm Compose file
+version: "3.7"
+services:
+ flaskapp:
+  image: kyleal1/virtassessment
+  networks:
+    - app
+  deploy:
+   replicas: 3
+
+ nginx:
+  image: kyleal1/nginxassignment
+  ports:
+    - 80:5000
+  networks:
+    - app
+  depends_on:
+    - flaskapp
+  deploy:
+   replicas: 3
+
+ redis:
+  image: redis:latest
+
+networks:
+ app:
+  driver: overlay
